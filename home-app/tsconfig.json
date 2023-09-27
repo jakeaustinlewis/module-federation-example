@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Set your target ECMAScript version
+    "module": "ESNext", // Set your module system (e.g., "ESNext", "CommonJS", "UMD", "System", etc.)
+    "jsx": "react", // Enable JSX support
+    "strict": true, // Enable strict type checking
+    "esModuleInterop": true, // Enable compatibility with CommonJS modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node", // Specify module resolution strategy (e.g., "node", "classic")
+    "baseUrl": "./", // Base directory for resolving non-relative module names
+    "paths": {
+      "@/*": ["src/*"] // Example alias for importing modules (customize as needed)
+    }
+  },
+  "include": ["src/**/*", "src/index.tsx"], // Specify which files to include in the compilation
+  "exclude": ["node_modules", "build"] // Specify files and directories to exclude from compilation
+}
