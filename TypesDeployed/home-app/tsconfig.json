@@ -11,7 +11,8 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./.wp_federation_publisher_types"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]

@@ -20,7 +20,7 @@ function App() {
           </Typography>
         </Stack>
       </Box>
-      <Header />
+      <Header title="WE DID IT" />
     </Box>
   );
 }

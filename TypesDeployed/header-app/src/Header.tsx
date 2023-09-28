@@ -1,28 +1,32 @@
-import React from "react"; // Must be imported for webpack to work
+import React from "react";
 
 import { Box, Typography, Stack } from "@mui/material";
-const Header = React.lazy(() => import("HeaderApp/Header"));
 
-function App() {
+interface HeaderProps {
+  title: string;
+}
+
+function Header(props: HeaderProps) {
+  const { title } = props;
+
   return (
     <Box>
       <Box
         sx={{
           display: "flex",
           flex: 1,
-          bgcolor: "primary.main",
+          bgcolor: "success.main",
           width: "100%",
         }}
       >
         <Stack direction="row" justifyContent="center" sx={{ p: 10 }} flex={1}>
           <Typography variant="h1" sx={{ color: "#FFFFFF" }}>
-            Consuming Module
+            {title}
           </Typography>
         </Stack>
       </Box>
-      <Header />
     </Box>
   );
 }
 
-export default App;
+export default Header;

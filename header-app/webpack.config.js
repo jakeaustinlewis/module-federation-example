@@ -1,5 +1,4 @@
 const path = require("path");
-// home-app/webpack.config.js
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // import ModuleFederationPlugin from webpack
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
@@ -8,9 +7,7 @@ const { dependencies } = require("./package.json");
 
 module.exports = {
   mode: "development",
-  //   entry: "./src/entry.ts",
-  entry: "./src/index.tsx",
-
+  entry: "./entry.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -35,10 +32,32 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
+    new ModuleFederationPlugin({
+      name: "HeaderApp", // This application named 'HeaderApp'
+      filename: "remoteEntry.js", // output a js file
+      exposes: {
+        // which exposes
+        "./Header": "./src/App", // a module 'Header' from './src/App'
+      },
+      shared: {
+        // and shared
+        ...dependencies, // some other dependencies
+        react: {
+          // react
+          singleton: true,
+          requiredVersion: dependencies["react"],
+        },
+        "react-dom": {
+          // react-dom
+          singleton: true,
+          requiredVersion: dependencies["react-dom"],
+        },
+      },
+    }),
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, ""),
+      directory: path.join(__dirname, "dist"),
     },
     compress: true,
     historyApiFallback: true,

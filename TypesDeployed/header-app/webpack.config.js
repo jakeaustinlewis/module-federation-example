@@ -1,5 +1,4 @@
 const path = require("path");
-// home-app/webpack.config.js
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // import ModuleFederationPlugin from webpack
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
@@ -27,6 +26,22 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "dts-loader",
+            options: {
+              name: "HeaderApp",
+              exposes: {
+                "./Header": "./src/Header",
+              },
+              typesOutputDir: ".wp_federation",
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -34,20 +49,14 @@ module.exports = {
       template: "./index.html",
     }),
     new ModuleFederationPlugin({
-      name: "HomeApp", // This application named 'HomeApp'
-      // This is where we define the federated modules that we want to consume in this app.
-      // Note that we specify "Header" as the internal name
-      // so that we can load the components using import("Header/").
-      // We also define the location where the remote's module definition is hosted:
-      // Header@[http://localhost:3001/remoteEntry.js].
-      // This URL provides three important pieces of information: the module's name is "Header", it is hosted on "localhost:3001",
-      // and its module definition is "remoteEntry.js".
-      remotes: {
-        HeaderApp: "HeaderApp@http://localhost:3001/remoteEntry.js",
+      name: "HeaderApp", // This application named 'HeaderApp'
+      filename: "remoteEntry.js", // output a js file
+      exposes: {
+        // which exposes
+        "./Header": "./src/Header", // a module 'Header' from './src/App'
       },
       shared: {
-        // and shared
-        ...dependencies, // other dependencies
+        ...dependencies,
         react: {
           // react
           singleton: true,
@@ -62,11 +71,16 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, "dist"),
+      },
+      {
+        directory: path.join(__dirname, ".wp_federation"),
+      },
+    ],
     compress: true,
     historyApiFallback: true,
-    port: 3000,
+    port: 3001,
   },
 };

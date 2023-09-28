@@ -1,7 +1,6 @@
-import React from "react"; // Must be imported for webpack to work
+import React from "react";
 
 import { Box, Typography, Stack } from "@mui/material";
-// const Header = React.lazy(() => import("HeaderApp/Header"));
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           </Typography>
         </Stack>
       </Box>
-      {/* <Header /> */}
     </Box>
   );
 }

@@ -1,5 +1,5 @@
 {
-  "name": "react-ts-webpack-header-app",
+  "name": "types-deployed-header-app",
   "version": "1.0.0",
   "main": "index.ts",
   "license": "MIT",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js && node bundleTypes.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -27,9 +27,12 @@
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.7",
+    "@types/shelljs": "^0.8.13",
     "babel-loader": "^9.1.3",
     "css-loader": "^6.8.1",
+    "dts-loader": "^0.1.8",
     "html-webpack-plugin": "^5.5.3",
+    "shelljs": "^0.8.5",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",

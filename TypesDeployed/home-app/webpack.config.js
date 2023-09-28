@@ -6,6 +6,8 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 // import dependencies from package.json, which includes react and react-dom
 const { dependencies } = require("./package.json");
 
+const WebpackRemoteTypesPlugin = require("webpack-remote-types-plugin").default;
+
 module.exports = {
   mode: "development",
   entry: "./entry.ts",
@@ -33,6 +35,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
+    new WebpackRemoteTypesPlugin({
+      remotes: {
+        HeaderApp: "app@http://localhost:3001/remoteEntry.js",
+      },
+      outputDir: ".wp_federation_publisher_types", // Output directory for types
+      remoteFileName: "types.tgz", // default filename is [name]-dts.tgz where [name] is the remote name, for example, `app` with the above setup
+    }),
+
     new ModuleFederationPlugin({
       name: "HomeApp", // This application named 'HomeApp'
       // This is where we define the federated modules that we want to consume in this app.
